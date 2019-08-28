@@ -1,0 +1,4 @@
+# plugin
+-
+  slug: wp-multibyte-patch
+#   version: '2.8.1' # version指定ない場合は最新版
