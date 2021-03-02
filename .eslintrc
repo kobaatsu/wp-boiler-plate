@@ -18,8 +18,5 @@
       }
     ],
     "no-unused-vars": 1
-  },
-  "globals": {
-    "$": false
   }
 }

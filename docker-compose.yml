@@ -12,7 +12,7 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
     volumes:
-      - db_data:/var/lib/mysql
+      - ./db_data/data:/var/lib/mysql
       - ./db_data/init:/docker-entrypoint-initdb.d
 
   wordpress:
