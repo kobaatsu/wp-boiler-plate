@@ -87,7 +87,6 @@ sw.*
 www/*
 !www/wp-config.php
 dev/*
-!dev/style.css
 dist
 temp
 uploads
