@@ -1,36 +1,49 @@
 {
   "name": "wp-boiler-plate",
-  "version": "0.210302.1",
+  "version": "0.210302.2",
   "description": "boiler-plate to develop WP theme",
   "author": "KOBAYASHI atsushi",
   "homepage": "https://github.com/kobaatsu/wp-boiler-plate",
-  "main": "gulpfile.js",
   "scripts": {
-    "start": "docker-compose up -d && npx gulp",
+    "dev": "docker-compose up -d && watch",
     "plugin": "npx gulp installPlugins",
-    "init": "npx gulp installPlugins && npx gulp init && npx gulp wpStyle",
+    "watch": "npm-run-all --parallel watch:*",
+    "watch:css": "stylus src/asset/css/style.styl -o ./dev/asset/css  --include-css --sourcemap --watch",
+    "watch:php": "pug src/**/*.pug -o ./dev/ --watch -P -E php",
+    "watch:image": "cpx 'src/asset/image/**/*.*' dev/asset/image --watch",
+    "watch:js": "esbuild src/asset/js/main.js --bundle --outfile=dev/asset/js/main.js --sourcemap --watch",
+    "build": "npm-run-all --parallel build:*",
+    "build:css": "stylus src/asset/css/style.styl -o ./dev/asset/css --include-css && postcss dev/asset/css/style.css --use autoprefixer postcss-sort-media-queries cssnano -d dist/asset/css/ --no-map",
+    "build:php": "pug src/*.pug -o ./dist/ -E php",
+    "build:image": "node ./task/imagemin.js src/asset/image dist/asset/image",
+    "build:js": "esbuild src/asset/js/main.js --bundle --outfile=dist/asset/js/main.js --minify",
     "up": "docker-compose up",
     "stop": "docker-compose stop",
     "down": "docker-compose down",
     "cli": "docker-compose run --rm cli bash",
-    "dist": "npx gulp dist",
-    "build": "npx gulp dist",
-    "watch": "npx gulp",
-    "lint": "eslint --fix src/js/**/*.js"
+    "lint": "eslint --fix src/asset/**/*.js"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:kobaatsu/wp-boiler-plate.git"
   },
+  "lint-staged": {
+    "*.{js}": "npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "devDependencies": {
-    "@babel/core": "^7.13.8",
-    "@babel/preset-env": "^7.13.9",
     "autoprefixer": "^10.2.4",
-    "babel-loader": "^8.2.2",
-    "css-mqpacker": "^7.0.0",
+    "commander": "^2.20.3",
+    "cpx": "^1.5.0",
+    "cssnano": "^4.1.10",
     "decompress": "^4.2.1",
     "del": "^6.0.0",
     "download": "^8.0.0",
+    "esbuild": "^0.8.54",
     "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
@@ -39,25 +52,20 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^4.1.0",
-    "gulp": "^4.0.2",
-    "gulp-changed": "^4.0.2",
-    "gulp-eslint": "^6.0.0",
-    "gulp-eslint-if-fixed": "^1.0.0",
-    "gulp-header": "^2.0.9",
-    "gulp-imagemin": "^7.1.0",
-    "gulp-notify": "^3.2.0",
-    "gulp-plumber": "^1.2.1",
-    "gulp-postcss": "^9.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sass-glob": "^1.1.0",
-    "gulp-uglify": "^3.0.2",
+    "husky": "^5.1.3",
+    "imagemin": "^7.0.1",
+    "imagemin-gifsicle": "^7.0.0",
     "imagemin-mozjpeg": "^9.0.0",
     "imagemin-pngquant": "^9.0.1",
+    "imagemin-svgo": "^8.0.0",
     "js-yaml": "^4.0.0",
-    "open": "^7.4.2",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.2.6",
+    "postcss-cli": "^8.3.1",
+    "postcss-sort-media-queries": "^3.4.3",
     "prettier": "^2.2.1",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.24.2",
-    "webpack-stream": "^6.1.2"
+    "pug": "^2.0.4",
+    "pug-cli": "^1.0.0-alpha6",
+    "stylus": "^0.54.8"
   }
 }
