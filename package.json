@@ -6,7 +6,7 @@
   "homepage": "https://github.com/kobaatsu/wp-boiler-plate",
   "scripts": {
     "dev": "docker-compose up -d && watch",
-    "plugin": "npx gulp installPlugins",
+    "plugin": "node ./task/installPlugins",
     "watch": "npm-run-all --parallel watch:*",
     "watch:css": "stylus src/asset/css/style.styl -o ./dev/asset/css  --include-css --sourcemap --watch",
     "watch:php": "pug src/**/*.pug -o ./dev/ --watch -P -E php",
@@ -15,7 +15,7 @@
     "build": "npm-run-all --parallel build:*",
     "build:css": "stylus src/asset/css/style.styl -o ./dev/asset/css --include-css && postcss dev/asset/css/style.css --use autoprefixer postcss-sort-media-queries cssnano -d dist/asset/css/ --no-map",
     "build:php": "pug src/*.pug -o ./dist/ -E php",
-    "build:image": "node ./task/imagemin.js src/asset/image dist/asset/image",
+    "build:image": "node ./task/imagemin src/asset/image dist/asset/image",
     "build:js": "esbuild src/asset/js/main.js --bundle --outfile=dist/asset/js/main.js --minify",
     "up": "docker-compose up",
     "stop": "docker-compose stop",
