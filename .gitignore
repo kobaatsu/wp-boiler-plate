@@ -86,7 +86,7 @@ sw.*
 
 www/*
 !www/wp-config.php
-dev/*
+dev
 dist
 temp
 uploads
