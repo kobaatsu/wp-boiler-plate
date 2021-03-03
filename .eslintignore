@@ -1,3 +1,5 @@
-dev/*
-theme/*
-node_modules/*
+dev
+dist
+node_modules
+temp
+www
