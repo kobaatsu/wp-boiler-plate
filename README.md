@@ -6,7 +6,7 @@ wordpressテーマ開発用ボイラープレート
 
 ### node module のインストール
 
-リポジトリをチェックアウトした後
+リポジトリをクローンした後
 
 ```
 $ npm install
@@ -24,7 +24,7 @@ node.js環境が必要です。
 services:
   wordpress:
     volumes:
-      # - ./theme:/var/www/html/wp-content/themes/theme-name # テーマ名を指定してください。
+      # - ./dev:/var/www/html/wp-content/themes/(theme-name) # テーマ名を指定
 ```
 
 `docker-compose.yml` にあらかじめ `container_name` を指定しておくと便利です。
@@ -62,11 +62,11 @@ $ npm run build
 
 Dockerコンテナを起動すると http://localhost:8080 から確認できるようになります。管理画面は http://localhost:8080/wp-admin から確認できます。
 
-`$ npm run dev` または `$ npm run watch` コマンドでソース監視を起動させると `src` の修正内容がすぐに `dev/wp-content/themes/(テーマファイル名)` 内に反映されます（scssファイルのコンパイル・JSのwebpack・画像の最適化）。
+`$ npm run dev` または `$ npm run watch` コマンドでソース監視を起動させると `src` の修正内容がすぐに `dev/wp-content/themes/(テーマファイル名)` 内に反映されます（scss/stylusファイルのコンパイル・JSのバンドル・画像の最適化）。
 
 ### 開発環境用WordPressプラグイン
 
-`$ npm run plugin` コマンドで開発環境にプラグインがインストールされます。
+`$ npm run plugin` コマンドで開発環境にプラグインがインストールされます。開発時に、あらかじめプラグインのバージョンなどが指定されているときに使います。
 
 インストールされる内容は `plugins.yml` に定義されています。定義を変更したときは再度プラグインのインストールを行ってください。ただし、管理画面やwp-cliからプラグインの追加・更新をした場合、インストール後は定義された状態まで巻き戻ってしまうので注意してください。
 
@@ -89,16 +89,19 @@ wordpress.orgで配布されていない、またはオリジナルのプラグ�
 ├ db_data/
 │ ├ data/ (データベース永続化ファイル)
 │ └ init/initial.sql (初期データベース内容)
-├ dev/ (Docker環境の /var/www/html/wp-content/theme/(theme) がそのままマウントされる)
+├ dev/ (Docker環境の /var/www/html/wp-content/themes/(theme-name) がマウントされる)
 ├ dist/ (最適化されたテーマファイル)
+├ helper/ (タスクやコンパイルの設定)
 ├ plugins/ (wordpress.orgで配布されていないプラグインを格納する)
-├ src/ (js/css/画像のオリジナル)
+├ src/
 │ ├ asset/
-│ │ ├ css/style.styl (コンパイル対象stylusファイル)
-│ │ ├ image (画像の格納先)
-│ │ └ js/main.js (esbuildのエントリーポイント)
+│ │ ├ css/
+│ │ │ ├ *.scss (コンパイル対象scssファイル)
+│ │ │ └ *.styl (コンパイル対象stylusファイル)
+│ │ ├ image/ (画像の格納先)
+│ │ └ js/main.js (バンドルされるJS 名前を変更したい場合はpackage.jsonも変更)
+│ ├ *.php (テーマファイルにコピーされる)
 │ └ *.pug (phpに変換される)
-├ tasks/ (タスク設定)
 ├ uploads/ (/var/www/html/wp-content/uploads にマウントされる)
 ├ www/ (/var/www/html にマウントされる)
 │ └ wp-config.php (開発環境用wp-config)
