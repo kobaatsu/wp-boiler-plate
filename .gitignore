@@ -84,6 +84,8 @@ sw.*
 # Vim swap files
 *.swp
 
+# wordpress
+db_data/data
 www/*
 !www/wp-config.php
 dev
