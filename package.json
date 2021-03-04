@@ -1,9 +1,13 @@
 {
   "name": "wp-boiler-plate",
-  "version": "0.210303.1",
+  "version": "0.210304.1",
   "description": "boiler-plate to develop WP theme",
   "author": "KOBAYASHI atsushi",
   "homepage": "https://github.com/kobaatsu/wp-boiler-plate",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kobaatsu/wp-boiler-plate.git"
+  },
   "scripts": {
     "dev": "docker-compose up -d && run-p dev:** && npm run watch",
     "dev:image": "cpx 'src/asset/image/**/*.*' dev/asset/image",
@@ -36,10 +40,6 @@
     "down": "docker-compose down",
     "cli": "docker-compose run --rm cli bash",
     "lint": "eslint --fix src/asset/**/*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:kobaatsu/wp-boiler-plate.git"
   },
   "lint-staged": {
     "*.{js}": "npm run lint"
@@ -75,7 +75,7 @@
     "js-yaml": "^4.0.0",
     "npm-run-all": "^4.1.5",
     "onchange": "^7.1.0",
-    "postcss": "^8.2.6",
+    "postcss": "^8.2.7",
     "postcss-cli": "^8.3.1",
     "postcss-sort-media-queries": "^3.4.3",
     "prettier": "^2.2.1",
