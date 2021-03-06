@@ -25,7 +25,7 @@
     "watch:sass": "npm run dev:sass -- --watch",
     "watch:stylus": "npm run dev:stylus -- -w",
     "watch:wpStyle": "npm run dev:wpStyle -- -w",
-    "build": "run-p build:** && npm run postcss",
+    "build": "rimraf dist && run-p build:** && npm run postcss",
     "build:image": "node ./helper/imagemin src/asset/image dist/asset/image",
     "build:js": "esbuild src/asset/js/main.js --bundle --outfile=dist/asset/js/main.js --minify",
     "build:php": "cpx 'src/**/*.php' dist/",
@@ -80,6 +80,7 @@
     "postcss-sort-media-queries": "^3.6.5",
     "prettier": "^2.2.1",
     "pug": "^3.0.2",
+    "rimraf": "^3.0.2",
     "sass": "^1.32.8",
     "stylus": "^0.54.8"
   }
