@@ -4,6 +4,7 @@ const imageminGifsicle = require('imagemin-gifsicle')
 const imageminMozjpeg = require('imagemin-mozjpeg')
 const imageminPngquant = require('imagemin-pngquant')
 const imageminSvgo = require('imagemin-svgo')
+const { extendDefaultPlugins } = require('svgo')
 const path = require('path')
 
 const src = [
@@ -20,7 +21,9 @@ imagemin(src, {
     imageminGifsicle(),
     imageminMozjpeg({ quality: 80 }),
     imageminPngquant({ quality: [0.65, 0.8] }),
-    imageminSvgo(),
+    imageminSvgo({
+      plugins: extendDefaultPlugins([{ name: 'cleanupIDs', active: false }]),
+    }),
   ],
 }).then(() => {
   console.log('image optimized')
