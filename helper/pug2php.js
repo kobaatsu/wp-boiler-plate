@@ -13,7 +13,7 @@ const readdirRecursively = require('./readdirRecursively')
     await mkdir(distDir)
   }
   let src = await readdirRecursively(srcDir)
-  src = src.filter((elm) => /\.pug$/.test(elm))
+  src = src.filter((elm) => /\.pug$/.test(elm) && !/\/_/.test(elm))
   for (const item of src) {
     const name = path.basename(item, 'pug')
     const ext = 'php'
